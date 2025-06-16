@@ -10,8 +10,6 @@ tests/data/asr
 bert.pt.json
 work
 runs
-*.parquet
-*.json
 cache/
 fastspeech_output
 .hydra

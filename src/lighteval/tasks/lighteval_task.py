@@ -626,6 +626,26 @@ def create_requests_from_tasks(  # noqa: C901
     # Filter out tasks that don't have any docs
     task_dict_items = [(name, task) for name, task in task_dict.items() if len(task.eval_docs()) > 0]
 
+    print("=== Task Dictionary Items ===")
+    for name, task in task_dict.items():
+        print(f"\nTask: {name}")
+        print(f"   • Class: {task.__class__.__name__}")
+        print(f"   • Dataset: {task.dataset_path}")
+        print(f"   • Config: {task.dataset_config_name}")
+        print(f"   • Version: {task.version}")
+        print(f"   • Eval splits: {task.evaluation_split}")
+        print(f"   • Fewshot split: {task.fewshot_split}")
+        print(f"   • Metrics: {[m.metric_name for m in task.metrics]}")
+        print(f"   • Suite: {task.suite}")
+        print(f"   • Generation size: {task.generation_size}")
+        print(f"   • Stop sequence: {task.stop_sequence}")
+        try:
+            num_docs = len(task.eval_docs())
+            print(f"   • Number of eval docs: {num_docs}")
+        except Exception as e:
+            print(f"   • Number of eval docs: Error loading - {e}")
+        print("-" * 60)
+
     # Get lists of each type of request
     for task_name, task in task_dict_items:
         task_docs = list(task.eval_docs())

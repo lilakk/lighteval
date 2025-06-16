@@ -221,7 +221,6 @@ class Pipeline:
             if self._metric_options:
                 self._update_num_samples(task_dict)
             LightevalTask.load_datasets(list(task_dict.values()), self.pipeline_parameters.dataset_loading_processes)
-
             self.evaluation_tracker.task_config_logger.log(task_dict)
 
             requests, docs = create_requests_from_tasks(
@@ -485,9 +484,11 @@ class Pipeline:
         logger.info("--- RUNNING MODEL ---")
 
         if self.model.is_async:
+            logger.info("Running model asynchronously")
             sample_id_to_responses = asyncio.run(self._run_model_async())
 
         else:
+            logger.info("Running model synchronously")
             sample_id_to_responses = self._run_model_sync()
 
         # Cleaning up the model before running metrics
@@ -538,7 +539,6 @@ class Pipeline:
                     formatted_docs=docs,
                     metrics=metric_category_metrics,
                 )
-
                 for output, doc, response in zip(outputs, docs, responses):
                     self.evaluation_tracker.metrics_logger.log(task_name, output)
                     self.evaluation_tracker.details_logger.log(task_name, task, doc, response, output)
