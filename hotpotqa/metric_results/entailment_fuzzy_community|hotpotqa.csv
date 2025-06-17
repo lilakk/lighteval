@@ -1,0 +1,14 @@
+Model,Score,Status,File_Path,Task,Metric,Timestamp
+allenai/OLMo-2-0425-1B,0.36883434211282,success,results/results/allenai/OLMo-2-0425-1B/results_2025-06-16T16-40-10.166088.json,community|hotpotqa,entailment_fuzzy,latest
+Qwen/Qwen2.5-0.5B,0.471471942698409,success,results/results/Qwen/Qwen2.5-0.5B/results_2025-06-16T16-49-36.857306.json,community|hotpotqa,entailment_fuzzy,latest
+Qwen/Qwen2.5-1.5B,0.4768302880156779,success,results/results/Qwen/Qwen2.5-1.5B/results_2025-06-16T16-51-40.489315.json,community|hotpotqa,entailment_fuzzy,latest
+meta-llama/Llama-3.2-1B,0.4310062368016608,success,results/results/meta-llama/Llama-3.2-1B/results_2025-06-16T17-15-05.320109.json,community|hotpotqa,entailment_fuzzy,latest
+Qwen/Qwen2.5-3B,0.4859253459625755,success,results/results/Qwen/Qwen2.5-3B/results_2025-06-16T16-54-02.965402.json,community|hotpotqa,entailment_fuzzy,latest
+meta-llama/Llama-3.2-3B,0.4073364326882222,success,results/results/meta-llama/Llama-3.2-3B/results_2025-06-16T17-07-12.845965.json,community|hotpotqa,entailment_fuzzy,latest
+allenai/OLMo-2-1124-7B,0.4325319933597045,success,results/results/allenai/OLMo-2-1124-7B/results_2025-06-16T16-41-38.856708.json,community|hotpotqa,entailment_fuzzy,latest
+Qwen/Qwen2.5-7B,0.42959293106647556,success,results/results/Qwen/Qwen2.5-7B/results_2025-06-16T16-56-24.220837.json,community|hotpotqa,entailment_fuzzy,latest
+meta-llama/Llama-3.1-8B,0.46801337774542145,success,results/results/meta-llama/Llama-3.1-8B/results_2025-06-16T17-09-44.407151.json,community|hotpotqa,entailment_fuzzy,latest
+allenai/OLMo-2-1124-13B,0.49519843921820655,success,results/results/allenai/OLMo-2-1124-13B/results_2025-06-16T16-43-39.296570.json,community|hotpotqa,entailment_fuzzy,latest
+Qwen/Qwen2.5-14B,0.4853989255022643,success,results/results/Qwen/Qwen2.5-14B/results_2025-06-16T16-59-48.628354.json,community|hotpotqa,entailment_fuzzy,latest
+allenai/OLMo-2-0325-32B,0.5092946093829718,success,results/results/allenai/OLMo-2-0325-32B/results_2025-06-16T16-47-37.858096.json,community|hotpotqa,entailment_fuzzy,latest
+Qwen/Qwen2.5-32B,0.4996936454365675,success,results/results/Qwen/Qwen2.5-32B/results_2025-06-16T17-04-32.009273.json,community|hotpotqa,entailment_fuzzy,latest

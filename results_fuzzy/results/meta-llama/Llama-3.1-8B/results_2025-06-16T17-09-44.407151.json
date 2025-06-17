@@ -1,0 +1,118 @@
+{
+  "config_general": {
+    "lighteval_sha": "e77b218a70da9a55ec813146f98dbde591e9d6e8",
+    "num_fewshot_seeds": 1,
+    "max_samples": null,
+    "job_id": 0,
+    "start_time": 2158888.394540471,
+    "end_time": 2159024.375664024,
+    "total_evaluation_time_secondes": "135.98112355312333",
+    "model_name": "meta-llama/Llama-3.1-8B",
+    "model_sha": "",
+    "model_dtype": null,
+    "model_size": null,
+    "generation_parameters": {
+      "early_stopping": null,
+      "repetition_penalty": null,
+      "frequency_penalty": null,
+      "length_penalty": null,
+      "presence_penalty": null,
+      "max_new_tokens": null,
+      "min_new_tokens": null,
+      "seed": 42,
+      "stop_tokens": null,
+      "temperature": 0.0,
+      "top_k": null,
+      "min_p": null,
+      "top_p": null,
+      "truncate_prompt": null,
+      "response_format": null
+    }
+  },
+  "results": {
+    "community|hotpotqa|0": {
+      "entailment_fuzzy": 0.46801337774542145,
+      "entailment_fuzzy_stderr": 0.004024700574496566
+    },
+    "all": {
+      "entailment_fuzzy": 0.46801337774542145,
+      "entailment_fuzzy_stderr": 0.004024700574496566
+    }
+  },
+  "versions": {
+    "community|hotpotqa|0": 0
+  },
+  "config_tasks": {
+    "community|hotpotqa": {
+      "name": "hotpotqa",
+      "prompt_function": "prompt_fn",
+      "hf_repo": "hotpotqa/hotpot_qa",
+      "hf_subset": "fullwiki",
+      "metric": [
+        {
+          "metric_name": "entailment_fuzzy",
+          "higher_is_better": true,
+          "category": "3",
+          "use_case": "1",
+          "sample_level_fn": "compute",
+          "corpus_level_fn": "mean"
+        }
+      ],
+      "hf_revision": null,
+      "hf_filter": null,
+      "hf_avail_splits": [
+        "train",
+        "validation",
+        "test"
+      ],
+      "trust_dataset": true,
+      "evaluation_splits": [
+        "validation"
+      ],
+      "few_shots_split": null,
+      "few_shots_select": null,
+      "generation_size": 50,
+      "generation_grammar": null,
+      "stop_sequence": [
+        "\n"
+      ],
+      "num_samples": null,
+      "suite": [
+        "community"
+      ],
+      "original_num_docs": 7405,
+      "effective_num_docs": 7405,
+      "must_remove_duplicate_docs": false,
+      "version": 0
+    }
+  },
+  "summary_tasks": {
+    "community|hotpotqa|0": {
+      "hashes": {
+        "hash_examples": "31a3a872175d4e88",
+        "hash_full_prompts": "31a3a872175d4e88",
+        "hash_input_tokens": "e3b9e20a20e4d1ee",
+        "hash_cont_tokens": "f92dcc4f66498f3e"
+      },
+      "truncated": 0,
+      "non_truncated": 7405,
+      "padded": 0,
+      "non_padded": 7405,
+      "effective_few_shots": 0.0,
+      "num_truncated_few_shots": 0
+    }
+  },
+  "summary_general": {
+    "hashes": {
+      "hash_examples": "9efc1456b422048b",
+      "hash_full_prompts": "9efc1456b422048b",
+      "hash_input_tokens": "6769813e8893029b",
+      "hash_cont_tokens": "a1a610a62c18bdbb"
+    },
+    "truncated": 0,
+    "non_truncated": 7405,
+    "padded": 0,
+    "non_padded": 7405,
+    "num_truncated_few_shots": 0
+  }
+}

@@ -82,7 +82,7 @@ for model in models:
 
 df = df[base_columns + model_columns]
 
-output_file = f"aggregated_outputs_{task.replace('|', '_')}.csv"
+output_file = f"hotpotqa/aggregated_outputs.csv"
 df.to_csv(output_file, index=False)
 
 print(f"\nSaved aggregated results to {output_file}")

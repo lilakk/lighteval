@@ -238,7 +238,7 @@ def main():
     print(f"Total data points: {len(df_long)}")
 
     # Create a directory for charts based on the task
-    output_dir = Path(f"plots_{args.task.replace('|', '_')}")
+    output_dir = Path(f"hotpotqa/plots_{args.task.replace('|', '_')}")
     if args.sample_size:
         output_dir = f"{output_dir}_sample_{args.sample_size}"
     output_dir.mkdir(exist_ok=True)

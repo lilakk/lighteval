@@ -49,7 +49,6 @@ from lighteval.metrics.metrics_sample import (
     ExactMatches,
     Extractiveness,
     F1_score,
-    F1_score_HotpotQA,
     Faithfulness,
     GPassAtK,
     JudgeLLMSimpleQA,
@@ -231,14 +230,6 @@ class Metrics(Enum):
     f1_score = SampleLevelMetric(
         metric_name="f1",
         sample_level_fn=F1_score().compute,
-        category=MetricCategory.GENERATIVE,
-        use_case=MetricUseCase.ACCURACY,
-        corpus_level_fn=np.mean,
-        higher_is_better=True,
-    )
-    f1_score_hotpotqa = SampleLevelMetric(
-        metric_name="f1",
-        sample_level_fn=F1_score_HotpotQA().compute,
         category=MetricCategory.GENERATIVE,
         use_case=MetricUseCase.ACCURACY,
         corpus_level_fn=np.mean,

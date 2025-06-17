@@ -154,18 +154,11 @@ class Pipeline:
         self.evaluation_tracker = evaluation_tracker
         self._metric_options = metric_options or {}
         self.accelerator, self.parallel_context = self._init_parallelism_manager()
-        if self.pipeline_parameters.load_responses_from_details_date_id:
-            self.model = None
-        else:
-            self.model = self._init_model(model_config, model)
+        self.model = self._init_model(model_config, model)
 
         generation_parameters = model_config.generation_parameters.model_dump() if model_config else {}
 
-        if self.model:
-            self.evaluation_tracker.general_config_logger.log_model_info(generation_parameters, self.model.model_info)
-        else:
-            self.evaluation_tracker.general_config_logger.model_name = model_config.model_name
-        
+        self.evaluation_tracker.general_config_logger.log_model_info(generation_parameters, self.model.model_info)
         self._init_random_seeds()
         self._init_tasks_and_requests(tasks=tasks)
         # Final results
