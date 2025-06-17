@@ -15,38 +15,21 @@ from openai import OpenAI
 from pydantic import BaseModel
 
 
-JUDGE_TEMPLATE = """You are an expert at evaluating the correctness of answers to a question. You will be provided with a question and two answers to the question. For each answer, determine its correctness by assigning a score of 0 or 1 (0 means incorrect, 1 means correct), and provide a short explanation for your judgement. Return your response in the following JSON format:
+JUDGE_TEMPLATE = """You will be given a question, a reference answer, and a model answer. Evaluate whether the model answer is correct by assigning a score of 0 (incorrect) or 1 (correct). While the reference answer can help guide your judgment, it may not be the only valid answer, so you should also use your own knowledge to decide if the model answer is correct. Return your response in the following JSON format:
 
 {{
-    "judgement": {{
-        "answer1": {{
-            "correctness": 0 or 1,
-            "explanation": short explanation for your judgement
-        }}
-        "answer2": {{
-            "correctness": 0 or 1,
-            "explanation": short explanation for your judgement
-        }}
-    }}
+    "correctness": 0 or 1
 }}
 
 Question: {question}
-Answer 1: {answer1}
-Answer 2: {answer2}
+Reference answer: {gold}
+Model answer: {pred}
 
 Your judgement in JSON format: """
 
 
-class AnswerJudgement(BaseModel):
-    correctness: int  # 0 or 1
-    explanation: str
-
-class Judgement(BaseModel):
-    answer1: AnswerJudgement
-    answer2: AnswerJudgement
-
 class JSONSchema(BaseModel):
-    judgement: Judgement
+    correctness: int  # 0 or 1
 
 
 class Client():
@@ -79,9 +62,9 @@ class Client():
             response = self.client.beta.chat.completions.parse(**completion_kwargs)
             return response.choices[0].message.parsed
 
-    def call(self, prompt, model_name=None, temp=0.001, max_tokens=512):
+    def call(self, prompt, model_name=None, temp=0.001, max_tokens=512, structured_output=True):
         if self.client_type == "openai":
-            return self.openai_call(prompt, model_name, temp, max_tokens)
+            return self.openai_call(prompt, model_name, temp, max_tokens, structured_output)
         else:
             raise ValueError(f"Invalid client type: {self.client_type}")
 
@@ -92,7 +75,7 @@ class Correctness_GPT:
         aggregation_function: Callable[[list[float]], float] = max,
     ):
         self.aggregation_function = aggregation_function
-        self.model = "gpt-4.1-mini"
+        self.model = "gpt-4.1-2025-04-14"
         self.client = Client(client_type="openai", model_name=self.model)
 
     @staticmethod
@@ -123,7 +106,7 @@ class Correctness_GPT:
         return self.aggregation_function(results)
     
     def _get_judgement(self, question: str, gold: str, pred: str) -> float:
-        prompt = JUDGE_TEMPLATE.format(question=question, answer1=gold, answer2=pred)
+        prompt = JUDGE_TEMPLATE.format(question=question, gold=gold, pred=pred)
         response = self.client.call(
             prompt,
             model_name=self.model,
@@ -131,16 +114,13 @@ class Correctness_GPT:
             max_tokens=512,
             structured_output=True
         )
-        return response.judgment.answer2.correctness
+        return response.correctness
 
     def compute_one_item(self, question: str, gold: str, pred: str) -> float:
-        """
-        Use LLM-based evaluation.
-        """
         normalized_prediction = self._normalize_answer(pred)
         normalized_gold = self._normalize_answer(gold)
-        judgement = self._get_judgement(question=question, gold=normalized_gold, pred=normalized_prediction)
-        pass
+        correctness = self._get_judgement(question=question, gold=normalized_gold, pred=normalized_prediction)
+        return correctness
 
 
 correctness_gpt = SampleLevelMetric(
@@ -156,13 +136,7 @@ extend_enum(Metrics, "correctness_gpt", correctness_gpt)
 
 
 def prompt_fn(line, task_name: str = None):
-    """Defines how to go from a dataset line to a doc object.
-    Follow examples in src/lighteval/tasks/default_prompts.py, or get more info
-    about what this function should do in the README.
-    """
-    
     instruction = f"""Question: {line["question"]}\nConcise answer without explanation:"""
-
     return Doc(
         task_name=task_name,
         query=instruction,
@@ -175,9 +149,9 @@ hotpotqa_task = LightevalTaskConfig(
     name="hotpotqa",
     prompt_function=prompt_fn,  # must be defined in the file or imported from src/lighteval/tasks/tasks_prompt_formatting.py
     suite=["community"],
-    hf_repo="hotpotqa/hotpot_qa",
+    hf_repo="yapeichang/hotpotqa-filtered",
     trust_dataset=True,
-    hf_subset="fullwiki",
+    hf_subset="",
     hf_avail_splits=["train", "validation", "test"],
     evaluation_splits=["validation"],
     few_shots_split=None,
